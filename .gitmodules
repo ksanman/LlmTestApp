@@ -1,0 +1,6 @@
+[submodule "ChromaDBSharp"]
+	path = ChromaDBSharp
+	url = https://github.com/ksanman/ChromaDBSharp
+[submodule "AllMiniLML6v2Sharp"]
+	path = AllMiniLML6v2Sharp
+	url = https://github.com/ksanman/AllMiniLML6v2Sharp
