@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Docnet.Core" Version="2.6.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.57" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
@@ -24,9 +26,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AllMiniLML6v2Sharp\AllMiniLmL6V2Sharp\AllMiniLmL6V2Sharp.csproj" />
+    <ProjectReference Include="..\ChromaDBSharp\ChromaDBSharp\ChromaDBSharp.csproj" />
     <ProjectReference Include="..\reactcoretestapp.client\reactcoretestapp.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="all_mini_v2_model\model.onnx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="all_mini_v2_model\vocab.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,99 @@
+.documents {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.documents .doc-tools {
+    height: 64px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px gray;
+    padding: 0 25px;
+}
+
+.documents .doc-tools .doc-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.documents .doc-tools .doc-actions button {
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 10px 15px;
+}
+
+.documents .doc-tools .doc-actions button:hover {
+    background-color: gray;
+    cursor: pointer;
+}
+
+.documents .docsContainer {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0 25px;
+}
+
+form.add-form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+  
+form.add-form  label {
+    display: block;
+    margin-bottom: 8px;
+}
+  
+form.add-form input,
+form.add-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+  
+form.add-form .submit {
+    background: #12b600;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0;
+    width: 80px;
+}
+  
+form.add-form .submit:hover {
+    background: #0d8100;
+}
+
+form.add-form button.cancel {
+    background: gray;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 7px;
+}
+  
+form.add-form button.cancel:hover {
+    background: darkgray;
+}
+
+.add-form .actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}

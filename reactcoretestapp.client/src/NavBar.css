@@ -1,0 +1,44 @@
+.navigation {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.5rem 0rem;
+    background-color: #12b600;
+    color: #FFF;
+    box-shadow: 0 2px 2px 2px #0a9e00;
+}
+
+.main {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.brand-name {
+    text-decoration: none;
+    color: #FFF;
+    font-size: 1.3rem;
+    margin-left: 1rem;
+}
+
+.navigation-menu {
+    margin-left: auto;
+}
+
+.navigation-menu ul {
+    display: flex;
+    padding: 0;
+}
+
+.navigation-menu li {
+    list-style-type: none;
+    margin: 0 1rem;
+}
+
+.navigation-menu li a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}

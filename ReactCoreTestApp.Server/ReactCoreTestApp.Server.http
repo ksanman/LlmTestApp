@@ -1,6 +1,8 @@
 @ReactCoreTestApp.Server_HostAddress = http://localhost:5064
 
-GET {{ReactCoreTestApp.Server_HostAddress}}/weatherforecast/
-Accept: application/json
+# GET {{ReactCoreTestApp.Server_HostAddress}}/weatherforecast/
+# Accept: application/json
 
+GET {{ReactCoreTestApp.Server_HostAddress}}/api/Document
+Accept: application/json
 ###

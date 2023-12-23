@@ -33,6 +33,10 @@ namespace ReactCoreTestApp.Server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -42,7 +46,7 @@ namespace ReactCoreTestApp.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Documents");
                 });
 #pragma warning restore 612, 618
         }
