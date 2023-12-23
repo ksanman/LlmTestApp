@@ -85,21 +85,32 @@ namespace ReactCoreTestApp.Server.Services
             return _context.Documents;
         }
 
-        public IEnumerable<Document> Query(string query)
+        public IEnumerable<QueryResponseDTO> Query(string query)
         {
-            var chromaDocuments = _collectionClient.Query(queryTexts: [query], numberOfResults: 1, include: ["metadatas", "documents"]);
+            var chromaDocuments = _collectionClient.Query(queryTexts: [query], numberOfResults: 3, include: ["metadatas", "documents", "distances"]);
 
-            var docIds = chromaDocuments.Metadatas.SelectMany(m => m.Select(d =>
+            var results = chromaDocuments.Documents.First().Zip(chromaDocuments.Metadatas.First()).Zip(chromaDocuments.Distances.First()).Select(s =>
             {
-                if (d != null && d.TryGetValue("id", out string id))
+                return new ChromaQueryResult
                 {
-                    return id;
+                    Document = s.First.First,
+                    Metadata = s.First.Second,
+                    Distance = s.Second
+                };
+            })
+            .Where(r => r.Distance < 1f);
+
+            var docIds = results.Where(r =>
+            {
+                if (r.Metadata != null && r.Metadata.ContainsKey("id"))
+                {
+                    return true;
                 }
 
-                return string.Empty;
-            }));
+                return false;
+            }).Select(r => r.Metadata["id"]);
 
-            List<Document> docs = new();
+            List<Document> docs = [];
             foreach (var id in docIds)
             {
                 var entity = _context.Documents.Find(id);
@@ -109,7 +120,14 @@ namespace ReactCoreTestApp.Server.Services
                 }
             }
 
-            return docs;
+            return results.Zip(docs).Select(zipped =>
+            {
+                return new QueryResponseDTO
+                {
+                    Text = zipped.First.Document,
+                    Document = zipped.Second
+                };
+            });
             
         }
 

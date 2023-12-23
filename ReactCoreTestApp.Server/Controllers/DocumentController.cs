@@ -91,11 +91,11 @@ namespace ReactCoreTestApp.Server.Controllers
         }
 
         [HttpPost, Route("query")]
-        public IActionResult QueryDocuments(string query)
+        public IActionResult QueryDocuments(QueryRequestDTO query)
         {
             try
             {
-                var documents = _documentService.Query(query);
+                var documents = _documentService.Query(query.Query);
                 return Ok(documents);
             }
             catch(Exception e)

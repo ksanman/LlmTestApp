@@ -1,32 +1,21 @@
 import { useState, useEffect } from "react";
 import './Documents.css';
 import { Modal } from './Modal';
-
-enum DocType {
-    Text = 0,
-    Pdf,
-    Html,
-    Url
-}
-
-interface Doc {
-    id: string;
-    title: string;
-    author: string;
-    description: string;
-    content: string;
-    text: string;
-    type: DocType
-}
+import { Doc, DocType } from './models';
 
 export function Documents() {
     const [documents, setDocuments] = useState<Doc[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         fetch('api/document')
             .then(res => res.json())
-            .then(ds => setDocuments(ds as Doc[]));
+            .then(ds => {
+                setDocuments(ds as Doc[]);
+                setIsLoading(false);
+            });
       }, []);
 
     const openModal = () => {
@@ -42,6 +31,7 @@ export function Documents() {
         // Handle the form submission logic here
         // You can access form data using event.target elements
         // For example: event.target.title.value, event.target.author.value, etc.
+        setIsLoading(true);
         const form = e.target as any;
 
         const doc: Doc = {
@@ -81,9 +71,12 @@ export function Documents() {
                 alert('Failed to create document');
                 closeModal(); // Close the modal after form submission
         }
+
+        setIsLoading(false);
     };
 
     const onDelete = async (id: string) => {
+        setIsLoading(true);
         const requestOptions: RequestInit = {
             method: 'DELETE',
         };
@@ -105,6 +98,8 @@ export function Documents() {
             console.error('Error deleting document', error);
         }
 
+        setIsLoading(false);
+
     };
 
     return (
@@ -115,13 +110,17 @@ export function Documents() {
                     <button type="button" onClick={openModal}>Add</button>
                 </div>
             </div>
-            <div className="docsContainer">
-                {documents.map((d, i) => {
-                    return (
-                        <Doc doc={d} key={i} onDelete={onDelete}/>
-                    )
-                })}
-            </div>
+            {isLoading ? <div>Loading docs...</div> : 
+                <div className="docsContainer">
+                    {documents?.length === 0 ? <div> No Documents </div> :
+                        documents.map((d, i) => {
+                            return (
+                                <DocView doc={d} key={i} onDelete={onDelete}/>
+                            )
+                        })
+                    }
+                </div>
+            }
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <h2>Add Document</h2>
                 <form className="add-form" onSubmit={handleSubmit}>
@@ -157,7 +156,7 @@ interface DocProps {
     onDelete: (id: string) => void;
 }
 
-export function Doc({doc, onDelete}: DocProps) {
+export function DocView({doc, onDelete}: DocProps) {
     const handleDelete = () => {
         onDelete(doc.id);
     };  

@@ -9,6 +9,6 @@ namespace ReactCoreTestApp.Server.Services
         Document AddDocument(Document document);
         Document UpdateDocumet(Document document);
         bool DeleteDocument(string id);
-        IEnumerable<Document> Query(string query);
+        IEnumerable<QueryResponseDTO> Query(string query);
     }
 }

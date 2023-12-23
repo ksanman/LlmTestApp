@@ -2,6 +2,7 @@ import './NavBar.css';
 import { useState, useTransition } from "react";
 import { Home } from "./Home";
 import { Documents } from "./Documents";
+import { Search } from './Search';
 
 export function NavBar(){
     const [currentTab, setCurrentTab] = useState('home');
@@ -22,12 +23,17 @@ export function NavBar(){
                         <NavButton isActive={currentTab === 'documents'} 
                                 onClick={() => setCurrentTab('documents')}>Documents</NavButton>
                         </li>
+                        <li>
+                        <NavButton isActive={currentTab === 'search'} 
+                                onClick={() => setCurrentTab('search')}>Search</NavButton>
+                        </li>
                     </ul>
                 </div>
             </nav>
             <div className="main">
                 {currentTab === 'home' && <Home/>}
                 {currentTab === 'documents' && <Documents/>}
+                {currentTab === 'search' && <Search/>}
             </div>
         </>
     );

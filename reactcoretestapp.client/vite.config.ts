@@ -53,6 +53,10 @@ export default defineConfig({
             '^/api/document': {
                 target: 'https://localhost:7218/',
                 secure: false
+            },
+            '^/api/document/query': {
+                target: 'https://localhost:7218/',
+                secure: false
             }
         },
         port: 5173,
