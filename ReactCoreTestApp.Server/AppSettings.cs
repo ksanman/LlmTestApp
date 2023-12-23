@@ -8,5 +8,6 @@
         public string[]? Separators { get; set; }
         public string AllMiniV2Vocab { get; set; } = string.Empty;
         public string AllMiniV2Model { get; set; } = string.Empty;
+        public string SentenceTransformersEndpoint { get; set; } = string.Empty;
     }
 }

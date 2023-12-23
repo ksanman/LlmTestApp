@@ -87,9 +87,9 @@ namespace ReactCoreTestApp.Server.Services
 
         public IEnumerable<Document> Query(string query)
         {
-            var chromaDocuments = _collectionClient.Query(queryTexts: [query], numberOfResults: 3, include: ["metadatas", "documents"]);
+            var chromaDocuments = _collectionClient.Query(queryTexts: [query], numberOfResults: 1, include: ["metadatas", "documents"]);
 
-            var docIds = chromaDocuments.Metadatas.SelectMany(m => m.SelectMany(d =>
+            var docIds = chromaDocuments.Metadatas.SelectMany(m => m.Select(d =>
             {
                 if (d != null && d.TryGetValue("id", out string id))
                 {

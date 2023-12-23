@@ -120,6 +120,10 @@ form.add-form button.cancel:hover {
 
 .documents .doc .doc-header .left {
     max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
+    align-items: flex-start;
 }
 
 .documents .doc .doc-header .right {
@@ -145,6 +149,10 @@ form.add-form button.cancel:hover {
     background-color: red;
     color: #FFF;
     padding: 15px;
+}
+
+.documents .doc .doc-header .delete:hover {
+    background-color: rgb(136, 0, 0);
 }
 
 .documents .doc .content {

@@ -19,8 +19,10 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(AppSett
 builder.Services.AddTransient<IDocumentParserFactory, DocumentParserFactory>();
 builder.Services.AddTransient<ITextSplitter, RecursiveTextSplitter>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
-builder.Services.AddScoped<IEmbedder, AllMiniLmL6V2Embedder>(providers => new AllMiniLmL6V2Embedder(modelPath: settings.AllMiniV2Model, tokenizer: new AllMiniLmL6V2Sharp.Tokenizer.BertTokenizer(settings.AllMiniV2Vocab)));
-builder.Services.AddScoped<IEmbeddable, AllMiniEmbedding>();
+//builder.Services.AddScoped<IEmbedder, AllMiniLmL6V2Embedder>(providers => new AllMiniLmL6V2Embedder(modelPath: settings.AllMiniV2Model, tokenizer: new AllMiniLmL6V2Sharp.Tokenizer.BertTokenizer(settings.AllMiniV2Vocab)));
+//builder.Services.AddScoped<IEmbeddable, AllMiniEmbedding>();
+builder.Services.AddScoped<IEmbeddable, SentenceTransformersEmbedding>();
+builder.Services.AddHttpClient<IEmbeddable, SentenceTransformersEmbedding>(client => client.BaseAddress = new Uri(settings.SentenceTransformersEndpoint));
 builder.Services.AddSingleton<IDocLib, DocLib>(providers => DocLib.Instance);
 builder.Services.RegisterChromaDBSharp(settings.ChromaDbUrl);
 
