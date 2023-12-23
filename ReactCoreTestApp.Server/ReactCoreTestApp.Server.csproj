@@ -13,6 +13,8 @@
   <ItemGroup>
     <PackageReference Include="Docnet.Core" Version="2.6.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.57" />
+    <PackageReference Include="LLamaSharp" Version="0.8.1" />
+    <PackageReference Include="LLamaSharp.Backend.Cuda12" Version="0.8.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>

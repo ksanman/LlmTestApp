@@ -19,3 +19,13 @@ export interface SearchResult {
     text: string;
     document: Doc;
 }
+
+export interface ChatRequest {
+    userText: string;
+    history: string[];
+}
+
+export interface ChatResponse {
+    responseText: string;
+    sources: Doc[];
+}

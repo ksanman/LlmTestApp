@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { Home } from "./Home";
 import { Documents } from "./Documents";
 import { Search } from './Search';
+import { Chat } from './IntelliChat';
 
 export function NavBar(){
     const [currentTab, setCurrentTab] = useState('home');
@@ -27,6 +28,10 @@ export function NavBar(){
                         <NavButton isActive={currentTab === 'search'} 
                                 onClick={() => setCurrentTab('search')}>Search</NavButton>
                         </li>
+                        <li>
+                            <NavButton isActive={currentTab === 'chat'} 
+                                    onClick={() => setCurrentTab('chat')}>Chat</NavButton>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -34,6 +39,7 @@ export function NavBar(){
                 {currentTab === 'home' && <Home/>}
                 {currentTab === 'documents' && <Documents/>}
                 {currentTab === 'search' && <Search/>}
+                {currentTab === 'chat' && <Chat/>}
             </div>
         </>
     );
