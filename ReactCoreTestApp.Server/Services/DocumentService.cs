@@ -58,6 +58,12 @@ namespace ReactCoreTestApp.Server.Services
 
         public bool DeleteDocument(string id)
         {
+            // Remove from Chroma.
+            _collectionClient.Delete(where: new
+            Dictionary<string, object> {
+                { "id", id}
+            });
+
             var entry = _context.Documents.Find(id);
             if (entry != null)
             {

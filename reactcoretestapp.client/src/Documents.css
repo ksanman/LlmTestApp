@@ -97,3 +97,57 @@ form.add-form button.cancel:hover {
     align-items: center;
     width: 100%;
 }
+
+.documents .doc {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 12px;
+    margin: 10px;
+    box-shadow: 0 1px 1px 0 lightsteelblue;
+    display: flex;
+    flex-direction: column;
+}
+
+.documents .doc .doc-header {
+    height: 72px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+        
+}
+
+.documents .doc .doc-header .left {
+    max-width: 50%;
+}
+
+.documents .doc .doc-header .right {
+    max-width: 50%;    
+}
+
+.documents .doc .doc-header .title {
+    font-weight: bold;
+}
+
+.documents .doc .doc-header .author {
+    font-style: italic;
+}
+
+.documents .doc .doc-header .description {
+    text-overflow: ellipsis;
+    max-width: 100%;       
+}
+
+.documents .doc .doc-header .delete {
+    border: 1px solid darkred;
+    border-radius: 7px;
+    background-color: red;
+    color: #FFF;
+    padding: 15px;
+}
+
+.documents .doc .content {
+    flex: 1;
+    padding: 7px;       
+}

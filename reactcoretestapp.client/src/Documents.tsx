@@ -38,6 +38,7 @@ export function Documents() {
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         // Handle the form submission logic here
         // You can access form data using event.target elements
         // For example: event.target.title.value, event.target.author.value, etc.
@@ -65,6 +66,9 @@ export function Documents() {
             const response = await fetch('api/document', requestOptions);
         
             if (response.ok) {
+                const newDoc = await response.json() as Doc;
+                documents.push(newDoc);
+                setDocuments(documents);
                 closeModal(); // Close the modal after successful submission
             } else {
                 console.error('Failed to create document', response);
@@ -79,6 +83,30 @@ export function Documents() {
         }
     };
 
+    const onDelete = async (id: string) => {
+        const requestOptions: RequestInit = {
+            method: 'DELETE',
+        };
+
+        try
+        {
+            const response = await fetch(`api/document/${id}`, requestOptions);
+            if(!response.ok) {
+                alert('Error deleting document');
+                const msg = await response.json();
+                console.error('Error deleting document', msg);
+            } else {
+                const newDocs = documents.filter(d => d.id !== id);
+                setDocuments(newDocs);
+
+            }
+        } catch(error) {
+            alert('Error deleting document')
+            console.error('Error deleting document', error);
+        }
+
+    };
+
     return (
         <div className="documents">
             <div className="doc-tools">
@@ -90,7 +118,7 @@ export function Documents() {
             <div className="docsContainer">
                 {documents.map((d, i) => {
                     return (
-                        <Doc doc={d} key={i}/>
+                        <Doc doc={d} key={i} onDelete={onDelete}/>
                     )
                 })}
             </div>
@@ -126,13 +154,28 @@ export function Documents() {
 }
 interface DocProps {
     doc: Doc;
+    onDelete: (id: string) => void;
 }
 
-export function Doc({doc}: DocProps) {
+export function Doc({doc, onDelete}: DocProps) {
+    const handleDelete = () => {
+        onDelete(doc.id);
+    };  
+
     return (
         <div className="doc">
-            <span>{doc.title}</span>
-            <div>{doc.content}</div>
+            <div className="doc-header">
+                <div className="left">
+                    <span className="title">{doc.title}</span>
+                    <span className="author">{doc.author}</span>
+                    <span className="desc">{doc.description}</span>
+                </div>
+                <div className="right">
+                    <button type="button" className="delete" onClick={handleDelete}>Delete</button>
+                </div>
+            </div>
+           
+            <div className="content">{doc.content}</div>
         </div>
     );
 }

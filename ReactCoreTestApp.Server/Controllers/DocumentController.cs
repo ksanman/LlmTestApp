@@ -105,7 +105,7 @@ namespace ReactCoreTestApp.Server.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteDocument(string id)
         {
             try
