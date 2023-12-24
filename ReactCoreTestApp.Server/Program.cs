@@ -69,4 +69,7 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
+DocumentContext context = app.Services.GetRequiredService<DocumentContext>();
+context.Database.EnsureCreated();
+
 app.Run();
