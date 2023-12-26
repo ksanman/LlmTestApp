@@ -5,71 +5,93 @@ using Docnet.Core;
 using LLama;
 using LLama.Common;
 using Microsoft.EntityFrameworkCore;
+using NLog;
+using NLog.Web;
 using ReactCoreTestApp.Server;
 using ReactCoreTestApp.Server.Data;
 using ReactCoreTestApp.Server.Services;
 
-var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<DocumentContext>(options =>
+// Early init of NLog to allow startup and exception logging, before host is built
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Info("Starting up");
+
+try
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("documentsdb"));
-});
-AppSettings settings = builder.Configuration.GetSection(AppSettings.AppSettingsName).Get<AppSettings>();
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(AppSettings.AppSettingsName));
-builder.Services.AddTransient<IDocumentParserFactory, DocumentParserFactory>();
-builder.Services.AddTransient<ITextSplitter, RecursiveTextSplitter>();
-builder.Services.AddScoped<IDocumentService, DocumentService>();
-builder.Services.AddScoped<IEmbedder, AllMiniLmL6V2Embedder>(providers => new AllMiniLmL6V2Embedder(modelPath: settings.AllMiniV2Model, tokenizer: new AllMiniLmL6V2Sharp.Tokenizer.BertTokenizer(settings.AllMiniV2Vocab)));
-builder.Services.AddScoped<IEmbeddable, AllMiniEmbedding>();
-builder.Services.AddSingleton<IDocLib, DocLib>(providers => DocLib.Instance);
-builder.Services.RegisterChromaDBSharp(settings.ChromaDbUrl);
+	var builder = WebApplication.CreateBuilder(args);
 
-// Load a model
-var parameters = new ModelParams(settings.ChatModelPath)
-{
-    ContextSize = 2048,
-    Seed = 1337,
-    GpuLayerCount = 5
-};
-builder.Services.AddSingleton(services => LLamaWeights.LoadFromFile(parameters));
-builder.Services.AddSingleton(services => services.GetRequiredService<LLamaWeights>().CreateContext(parameters));
-builder.Services.AddScoped(services =>
-{
-    LLamaContext context = services.GetRequiredService<LLamaContext>();
-    var ex = new InteractiveExecutor(context);
-    return new ChatSession(ex);
-});
+	builder.Logging.ClearProviders();
+	builder.Host.UseNLog();
 
-builder.Services.AddScoped<IChatService, ChatService>();
+	// Add services to the container.
+	builder.Services.AddDbContext<DocumentContext>(options =>
+	{
+		options.UseSqlite(builder.Configuration.GetConnectionString("documentsdb"));
+	});
+	AppSettings settings = builder.Configuration.GetSection(AppSettings.AppSettingsName).Get<AppSettings>();
+	builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(AppSettings.AppSettingsName));
+	builder.Services.AddTransient<IDocumentParserFactory, DocumentParserFactory>();
+	builder.Services.AddTransient<ITextSplitter, RecursiveTextSplitter>();
+	builder.Services.AddScoped<IDocumentService, DocumentService>();
+	builder.Services.AddScoped<IEmbedder, AllMiniLmL6V2Embedder>(providers => new AllMiniLmL6V2Embedder(modelPath: settings.AllMiniV2Model, tokenizer: new AllMiniLmL6V2Sharp.Tokenizer.BertTokenizer(settings.AllMiniV2Vocab)));
+	builder.Services.AddScoped<IEmbeddable, AllMiniEmbedding>();
+	builder.Services.AddSingleton<IDocLib, DocLib>(providers => DocLib.Instance);
+	builder.Services.RegisterChromaDBSharp(settings.ChromaDbUrl);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+	// Load a model
+	//var parameters = new ModelParams(settings.ChatModelPath)
+	//{
+	//    ContextSize = 2048,
+	//    Seed = 1337,
+	//    GpuLayerCount = 5
+	//};
+	//builder.Services.AddSingleton(services => LLamaWeights.LoadFromFile(parameters));
+	//builder.Services.AddSingleton(services => services.GetRequiredService<LLamaWeights>().CreateContext(parameters));
+	//builder.Services.AddScoped(services =>
+	//{
+	//    LLamaContext context = services.GetRequiredService<LLamaContext>();
+	//    var ex = new InteractiveExecutor(context);
+	//    return new ChatSession(ex);
+	//});
 
-var app = builder.Build();
+	builder.Services.AddScoped<IChatService, ChatService>();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+	builder.Services.AddControllers();
+	// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+	builder.Services.AddEndpointsApiExplorer();
+	builder.Services.AddSwaggerGen();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	var app = builder.Build();
+
+	app.UseDefaultFiles();
+	app.UseStaticFiles();
+
+	// Configure the HTTP request pipeline.
+	if (app.Environment.IsDevelopment())
+	{
+		app.UseSwagger();
+		app.UseSwaggerUI();
+	}
+
+	app.UseHttpsRedirection();
+
+	app.UseAuthorization();
+
+	app.MapControllers();
+
+	app.MapFallbackToFile("/index.html");
+
+	app.Run();
+
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapFallbackToFile("/index.html");
-
-DocumentContext context = app.Services.GetRequiredService<DocumentContext>();
-context.Database.EnsureCreated();
-
-app.Run();
+catch (Exception exception)
+{
+    // NLog: catch setup errors
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+	logger.Info("Shutting down.");
+	LogManager.Shutdown();
+}

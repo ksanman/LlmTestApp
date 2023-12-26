@@ -10,7 +10,7 @@ namespace ReactCoreTestApp.Server.Data
         public DocumentContext(DbContextOptions<DocumentContext> context)
             : base(context)
         {
-
+            this.Database.EnsureCreated();
         }
     }
 }

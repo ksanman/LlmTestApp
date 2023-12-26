@@ -87,8 +87,10 @@ namespace ReactCoreTestApp.Server.Services
 
         public IEnumerable<QueryResponseDTO> Query(string query)
         {
+            _logger.LogTrace("Searching for relavent documents: {query}", query);
             var chromaDocuments = _collectionClient.Query(queryTexts: [query], numberOfResults: 3, include: ["metadatas", "documents", "distances"]);
-
+            _logger.LogTrace("Found {count} documents", chromaDocuments.Documents.First().Count());
+            _logger.LogTrace("Filtering documents");
             var results = chromaDocuments.Documents.First().Zip(chromaDocuments.Metadatas.First()).Zip(chromaDocuments.Distances.First()).Select(s =>
             {
                 return new ChromaQueryResult
@@ -99,7 +101,8 @@ namespace ReactCoreTestApp.Server.Services
                 };
             })
             .Where(r => r.Distance < 1f);
-
+            _logger.LogTrace("Filtered to {count} documents", results.Count());
+            _logger.LogTrace("Searching DB for documents");
             var docIds = results.Where(r =>
             {
                 if (r.Metadata != null && r.Metadata.ContainsKey("id"))
@@ -110,6 +113,7 @@ namespace ReactCoreTestApp.Server.Services
                 return false;
             }).Select(r => r.Metadata["id"]);
 
+
             List<Document> docs = [];
             foreach (var id in docIds)
             {
@@ -119,6 +123,9 @@ namespace ReactCoreTestApp.Server.Services
                     docs.Add(entity);
                 }
             }
+
+            _logger.LogDebug("Found {count} documents", docIds.Count());
+            _logger.LogDebug("Merging document info.");
 
             return results.Zip(docs).Select(zipped =>
             {
