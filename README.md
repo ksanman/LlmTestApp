@@ -2,7 +2,7 @@
 React/ASP Net 8 App for Retrieval-Augemented Generation on local hardware (no apis).
 Uses C\# for embedding generation via [AllMiniLML6v2Sharp](https://github.com/ksanman/AllMiniLML6v2Sharp), LLAMA-2-Chat-7b via [LLamaSharp](https://github.com/SciSharp/LLamaSharp), and connection to a [ChromaDB](https://www.trychroma.com/) with [ChromaDBSharp](https://github.com/ksanman/ChromaDBSharp) all running on the local machine.
 
-This app is for demo purposes only, and not for production use.
+This app is for demo purposes only, to show the whole pipeline can be run from .NET, and not for production use.
 
 ## How to run.
 - Start a hosted version of chromadb. Follow instructions [here](https://docs.trychroma.com/deployment). I recommend using the docker build for an easy solution.
