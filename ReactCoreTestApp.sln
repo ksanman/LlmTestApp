@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactCoreTestApp.Server", "
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactcoretestapp.client", "reactcoretestapp.client\reactcoretestapp.client.esproj", "{4F617AF4-22CB-41B1-9B37-07E933D472CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AllMiniLmL6V2Sharp", "AllMiniLML6v2Sharp\AllMiniLmL6V2Sharp\AllMiniLmL6V2Sharp.csproj", "{EBAFBEC8-327A-48E4-B4CE-ADEB2CF56749}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChromaDBSharp", "ChromaDBSharp\ChromaDBSharp\ChromaDBSharp.csproj", "{3538CEC9-AAAF-47FA-814E-CC47DC81BB7A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,14 +23,6 @@ Global
 		{4F617AF4-22CB-41B1-9B37-07E933D472CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F617AF4-22CB-41B1-9B37-07E933D472CB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F617AF4-22CB-41B1-9B37-07E933D472CB}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{EBAFBEC8-327A-48E4-B4CE-ADEB2CF56749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBAFBEC8-327A-48E4-B4CE-ADEB2CF56749}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBAFBEC8-327A-48E4-B4CE-ADEB2CF56749}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBAFBEC8-327A-48E4-B4CE-ADEB2CF56749}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3538CEC9-AAAF-47FA-814E-CC47DC81BB7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3538CEC9-AAAF-47FA-814E-CC47DC81BB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3538CEC9-AAAF-47FA-814E-CC47DC81BB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3538CEC9-AAAF-47FA-814E-CC47DC81BB7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AllMiniLmL6V2Sharp" Version="0.0.1" />
+    <PackageReference Include="ChromaDBSharp" Version="0.0.1" />
     <PackageReference Include="Docnet.Core" Version="2.6.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.57" />
     <PackageReference Include="LLamaSharp" Version="0.8.1" />
@@ -30,18 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AllMiniLML6v2Sharp\AllMiniLmL6V2Sharp\AllMiniLmL6V2Sharp.csproj" />
-    <ProjectReference Include="..\ChromaDBSharp\ChromaDBSharp\ChromaDBSharp.csproj" />
     <ProjectReference Include="..\reactcoretestapp.client\reactcoretestapp.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="all_mini_v2_model\model.onnx">
+    <None Update="ai_models\llama-2-7b-chat.Q5_K_M.gguf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="all_mini_v2_model\vocab.txt">
+    <None Update="ai_models\model.onnx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ai_models\vocab.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
