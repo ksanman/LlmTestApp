@@ -10,7 +10,7 @@ export function NavBar(){
     return (
         <>
             <nav className="navigation">
-                <a href="/" className="brand-name">
+                <a onClick={() => setCurrentTab('home')} className="brand-name">
                     GPT Test App
                 </a>
                 <div
@@ -21,22 +21,22 @@ export function NavBar(){
                                 onClick={() => setCurrentTab('home')}>Home</NavButton>
                         </li>
                         <li>
-                        <NavButton isActive={currentTab === 'documents'} 
-                                onClick={() => setCurrentTab('documents')}>Documents</NavButton>
-                        </li>
-                        <li>
-                        <NavButton isActive={currentTab === 'search'} 
-                                onClick={() => setCurrentTab('search')}>Search</NavButton>
+                            <NavButton isActive={currentTab === 'search'} 
+                                    onClick={() => setCurrentTab('search')}>Search</NavButton>
                         </li>
                         <li>
                             <NavButton isActive={currentTab === 'chat'} 
                                     onClick={() => setCurrentTab('chat')}>Chat</NavButton>
                         </li>
+                        <li>
+                            <NavButton isActive={currentTab === 'documents'} 
+                                    onClick={() => setCurrentTab('documents')}>Manage Documents</NavButton>
+                        </li>
                     </ul>
                 </div>
             </nav>
             <div className="main">
-                {currentTab === 'home' && <Home/>}
+                {currentTab === 'home' && <Home onItemClick={(tab: string) => setCurrentTab(tab)}/>}
                 {currentTab === 'documents' && <Documents/>}
                 {currentTab === 'search' && <Search/>}
                 {currentTab === 'chat' && <Chat/>}

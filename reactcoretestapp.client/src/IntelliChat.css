@@ -42,6 +42,7 @@
     border-radius: 4px;
     cursor: pointer;
     margin: 0;
+    margin-left: 10px;
 }
 #chatButton:hover {
     background: #0d8100;

@@ -21,6 +21,9 @@
     color: #FFF;
     font-size: 1.3rem;
     margin-left: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 25px;
 }
 
 .navigation-menu {
@@ -35,10 +38,26 @@
 .navigation-menu li {
     list-style-type: none;
     margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .navigation-menu li a {
     text-decoration: none;
     display: block;
     width: 100%;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 7px;
+}
+
+.navigation-menu li a:hover {
+    background-color: #0a9e00;
+}
+
+.navigation-menu li b {
+    cursor: default;
+    padding: 5px;
+    border-bottom: 3px solid #0a9e00;
 }

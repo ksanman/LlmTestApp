@@ -105,7 +105,7 @@ export function Documents() {
     return (
         <div className="documents">
             <div className="doc-tools">
-                <h3> Documents </h3>
+                <h3>Manage Documents</h3>
                 <div className="doc-actions">
                     <button type="button" onClick={openModal}>Add</button>
                 </div>
