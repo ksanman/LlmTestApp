@@ -400,3 +400,4 @@ FodyWeavers.xsd
 *.db
 *.db-shm
 *.db-wal
+ai_models/
