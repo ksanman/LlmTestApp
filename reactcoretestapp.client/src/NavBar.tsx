@@ -11,7 +11,7 @@ export function NavBar(){
         <>
             <nav className="navigation">
                 <a onClick={() => setCurrentTab('home')} className="brand-name">
-                    GPT Test App
+                    C# Doc Retrieval App
                 </a>
                 <div
                     className="navigation-menu">
@@ -26,7 +26,7 @@ export function NavBar(){
                         </li>
                         <li>
                             <NavButton isActive={currentTab === 'chat'} 
-                                    onClick={() => setCurrentTab('chat')}>Chat</NavButton>
+                                    onClick={() => setCurrentTab('chat')}>Search w/LLM</NavButton>
                         </li>
                         <li>
                             <NavButton isActive={currentTab === 'documents'} 

@@ -7,6 +7,7 @@ export function Search() {
     const [isSearching, setIsSearching] = useState(false);
     const [results, setResults]= useState<SearchResult[]>([]);
     const [isFirstSearch, setIsFirstSearch] = useState(true);
+    const [searchTime, setSearchTime] = useState('');
 
     const search = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -24,9 +25,24 @@ export function Search() {
 
         try
         {
+            const start = new Date().getTime();
             const response = await fetch(url, requestOptions);
             if(response.ok) {
                 const results = await response.json() as SearchResult[];
+                const end = new Date().getTime() - start;
+                const minutes = Math.floor(end / (60 * 1000));
+                const seconds = Math.floor((end % (60 * 1000)) / 1000);
+                const remainingMilliseconds = end % 1000;
+
+
+                // Pad single-digit seconds and milliseconds with leading zeros
+                const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+                const formattedMilliseconds = remainingMilliseconds < 100
+                    ? remainingMilliseconds < 10
+                    ? `00${remainingMilliseconds}`
+                    : `0${remainingMilliseconds}`
+                    : `${remainingMilliseconds}`;
+                setSearchTime(`${minutes}:${formattedSeconds}.${formattedMilliseconds}`);
                 setResults(results);
             } else {
                 console.error("Error querying document");
@@ -51,13 +67,14 @@ export function Search() {
             </div>
             <div className="search-bar">
                 <form onSubmit={search}>
-                    <input name="searchBox" type="search" placeholder="Enter search here..." id="searchBox"/>
-                    <input type="submit" value="Go!" id="searchButton"/>
+                    <input name="searchBox" type="search" placeholder="Enter search here..." id="searchBox" disabled={isSearching}/>
+                    <input type="submit" value="Go!" id="searchButton" disabled={isSearching}/>
                 </form>
             </div>
             {isSearching 
             ? <div className="searching"> <span>Searching...</span> </div> 
             : <div className="results">
+                {results.length > 0 && <div>Results in {searchTime} </div>}
                 {results.length === 0 && !isFirstSearch ? <div>No Results!</div> : results.map((r, i) => {
                     return (
                         <Result result={r} key={i}/>

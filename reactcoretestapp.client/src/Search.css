@@ -47,6 +47,10 @@
 #searchButton:hover {
     background: #0d8100;
 }
+#searchButton:disabled {
+    background: #12b600;
+    cursor: default;
+}
 
 .search-bar form {
     width: 100%;

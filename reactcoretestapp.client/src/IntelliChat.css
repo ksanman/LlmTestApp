@@ -48,6 +48,11 @@
     background: #0d8100;
 }
 
+#chatButton:disabled {
+    background: #12b600;
+    cursor: default;
+}
+
 .chat-bar form {
     width: 100%;
     display: flex;

@@ -23,7 +23,7 @@ namespace ReactCoreTestApp.Server.Services
             _settings = settings;
             _logger = logger;
         }
-        const string PROMPT = "<s>[INST] <<SYS>>\\nUsing the context provided, answer the question.\\n<</SYS>>\\n\\n Context: {0} \\n\\n Question: {1} [/INST]\r\n";
+        const string PROMPT = "<s>[INST] <<SYS>>\\nUsing the context provided, answer the question.\\n<</SYS>>\\n\\n Context: {0} \\n\\n Question: {1} [/INST]\r\n</s>";
         public ChatResponse Chat(ChatRequest chatRequest)
         {
             _logger.LogTrace("Starting chat: {chat}", chatRequest.UserText);
